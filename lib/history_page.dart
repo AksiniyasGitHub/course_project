@@ -17,7 +17,8 @@ class HistoryPage extends StatelessWidget {
           : ListView.builder(
         itemCount: quoteHistory.length,
         itemBuilder: (context, index) {
-          print(quoteHistory);
+          print("i: ${index}, total: ${quoteHistory.length}");
+          print(quoteHistory[index]);
           return ListTile(
             title: Text(quoteHistory[index]['quote']),
             subtitle: Text('- ' + quoteHistory[index]['author']),
