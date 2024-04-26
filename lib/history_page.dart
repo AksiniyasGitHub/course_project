@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HistoryPage extends StatelessWidget {
-  final List<Map<String, String>> quoteHistory;
+  final List<Map<String, dynamic>> quoteHistory;
 
   HistoryPage({required this.quoteHistory});
 
@@ -17,20 +17,21 @@ class HistoryPage extends StatelessWidget {
           : ListView.builder(
         itemCount: quoteHistory.length,
         itemBuilder: (context, index) {
+          print(quoteHistory);
           return ListTile(
-            title: Text(quoteHistory[index]['quote']!),
-            subtitle: Text('- ' + quoteHistory[index]['author']!),
+            title: Text(quoteHistory[index]['quote']),
+            subtitle: Text('- ' + quoteHistory[index]['author']),
           );
         },
       ),
     );
   }
 
-  Future<List<Map<String, String>>> fetchQuoteHistoryFromFirestore() async {
+  Future<List<Map<String, dynamic>>> fetchQuoteHistoryFromFirestore() async {
     try {
       // Получаем список документов из коллекции Firestore и преобразуем их в список цитат
       final querySnapshot = await FirebaseFirestore.instance.collection('quotes').get();
-      return querySnapshot.docs.map((doc) => doc.data() as Map<String, String>).toList();
+      return querySnapshot.docs.map((doc) => doc.data()).toList();
     } catch (e) {
       print('Error fetching quote history: $e');
       return [];

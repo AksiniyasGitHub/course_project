@@ -92,11 +92,11 @@ class _MotivationPageState extends State<MotivationPage> {
     });
   }
 
-  Future<List<Map<String, String>>> fetchQuoteHistoryFromFirestore() async {
+  Future<List<Map<String, dynamic>>> fetchQuoteHistoryFromFirestore() async {
     try {
       // Получаем список документов из коллекции Firestore и преобразуем их в список цитат
       final querySnapshot = await FirebaseFirestore.instance.collection('quotes').get();
-      return querySnapshot.docs.map((doc) => doc.data() as Map<String, String>).toList();
+      return querySnapshot.docs.map((doc) => doc.data()).toList();
     } catch (e) {
       print('Error fetching quote history: $e');
       return [];
