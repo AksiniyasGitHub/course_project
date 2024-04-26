@@ -63,26 +63,6 @@ class _MotivationPageState extends State<MotivationPage> {
     nextRefreshTime = DateTime.now().add(Duration(days: 1));
   }
 
-  Future<void> saveQuoteToFirestore(String quote, String author) async {
-    // Добавляем цитату в коллекцию Firestore с меткой времени
-    await FirebaseFirestore.instance.collection('quotes').add({
-      'quote': quote,
-      'author': author,
-      'timestamp': FieldValue.serverTimestamp(),
-    });
-  }
-
-  Future<List<Map<String, dynamic>>> fetchQuoteHistoryFromFirestore() async {
-    try {
-      // Получаем список документов из коллекции Firestore и преобразуем их в список цитат
-      final querySnapshot = await FirebaseFirestore.instance.collection('quotes').get();
-      return querySnapshot.docs.map((doc) => doc.data()).toList();
-    } catch (e) {
-      print('Error fetching quote history: $e');
-      return [];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
